@@ -7,17 +7,16 @@ import funciones
 
 
 def main():
- 
+    
     if len(sys.argv) !=2:
         print("Error de parametros")
         sys.exit(1)
 
-    archivo=sys.argv[2]
+    archivo=sys.argv[1]
 
     #lectura del archivo
     grafo_wiki=funciones.leerArchivoTsvYCrearGrafo(archivo)
-    #comandos
-
+  
     while True:
         
             entrada=input().split()
@@ -27,10 +26,9 @@ def main():
             elif entrada[0]==acciones.COMANDOS[1]:
                 acciones.EjecutarDiametroEImprimirRespuesta(grafo_wiki)
             elif entrada[0]==acciones.COMANDOS[2]:
-                if len(entrada)!=3:
-                    print("Faltan parametros")
-                    continue
-                acciones.EjecutarCaminoMasCortoEImprimirRespuesta(grafo_wiki,entrada[1],entrada[2])
+                en=" ".join(entrada[1:])
+                v1,v2=en.split(",")
+                acciones.EjecutarCaminoMasCortoEImprimirRespuesta(grafo_wiki,v1,v2)
             elif entrada==acciones.COMANDOS[3]:
                 if len(entrada)!=3:
                     print("Faltan parametros")
@@ -46,4 +44,10 @@ def main():
                     print("Faltan parametros")
                     continue
                 acciones.EjecutarLectura2amEImprimirRespuesta(grafo_wiki, entrada[1:])
+            else:
+                print("No existe el comando")
+            
+
+if __name__ == "__main__":
+    main()
 

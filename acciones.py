@@ -1,14 +1,15 @@
 from biblioteca import *
 
-COMANDOS=["listar_operaciones","diametro","camino","rango","navegacion"]
+COMANDOS=["listar_operaciones","diametro","camino","rango","navegacion","clustering"]
 
 def EjecutarCaminoMasCortoEImprimirRespuesta(grafo, origen, destino):
-    lista_camino = camino_mas_corto(grafo, origen, destino)
+    lista_camino, costo = camino_mas_corto(grafo, origen, destino)
     if lista_camino is None:
         print("No se encontro recorrido")
         return
     camino_str = " -> ".join(lista_camino)
     print(camino_str)
+    print(f"Costo: {costo}")
 
 def EjecutarDiametroEImprimirRespuesta(grafo):
     lista_diametro, distancia_diametro = obtener_diametro(grafo)

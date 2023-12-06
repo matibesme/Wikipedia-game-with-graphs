@@ -4,16 +4,23 @@ from grafo.grafo import *
 
 
 def leerArchivoTsvYCrearGrafo(nombre_archivo):
-    
-    vertices=[]
     with open(nombre_archivo,'r') as archivo:
+        vertices = []
         for linea in archivo:
-            componentes=archivo.readline().split("\t")
+            componentes=linea.strip().split("\t")
             vertices.append(componentes[0])
-        grafo=Grafo(True, vertices)
-        for linea in archivo:
-            componentes=archivo.readline().split("\t")
-            for componente in componentes[1:]:
-                grafo.agregar_arista(componentes[0], componente)
+        grafo=Grafo(True,vertices)
+
     
+    
+    with open(nombre_archivo,'r') as archivo:
+        
+        for linea in archivo:
+            componentes=linea.strip().split("\t")
+            for componente in componentes[1:]:
+                if not grafo.estan_unidos(componentes[0],componente):
+                    grafo.agregar_arista(componentes[0], componente)
+
+
     return grafo
+

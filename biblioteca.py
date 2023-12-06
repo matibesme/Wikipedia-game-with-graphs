@@ -12,7 +12,7 @@ def obtener_diametro(grafo):
     return lista_diametro, distancia_diametro
     
 def mayor_distancia_desde_v(grafo, origen):
-    visitados = set(origen)
+    visitados = {origen: True}
     padres = {origen: None}
     distancias = {origen: 0}
     q = deque()
@@ -20,7 +20,7 @@ def mayor_distancia_desde_v(grafo, origen):
         v = q.popleft()
         for w in grafo.adyacentes(v):
             if w not in visitados:
-                visitados.add(w)
+                visitados{w]
                 padres[w] = v
                 distancias[w] = distancias[v] + 1
                 q.append(w)
@@ -33,23 +33,23 @@ def mayor_distancia_desde_v(grafo, origen):
 
 #CAMINO MAS CORTO
 def camino_mas_corto(grafo, origen, destino):
-    visitados = set(origen)
+    visitados = {origen: True}
+ 
     padres = {origen: None}
-    distancias = {origen: 0}
+    distancias = {origen: 0,destino: 0}
     q = deque()
+    q.append(origen)
     while len(q) > 0:
         v = q.popleft()
         for w in grafo.adyacentes(v):
             if w not in visitados:
-                visitados.add(w)
+                visitados[w]=True
                 padres[w] = v
                 distancias[w] = distancias[v] + 1
                 q.append(w)
                 if w == destino:
-                    break
-    if destino not in visitados:
-        return None
-    reconstruir_camino(origen, destino, padres, distancias)
+                    return reconstruir_camino(origen, destino, padres),distancias[destino]
+    return None,distancias[destino]
 
 def reconstruir_camino(origen, destino, padres):
     lista_camino = []
