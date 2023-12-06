@@ -1,6 +1,6 @@
 from biblioteca import *
 
-COMANDOS=["listar_operaciones","diametro","camino","rango","navegacion","clustering"]
+COMANDOS=["listar_operaciones","diametro","camino","rango","navegacion","lectura"]
 
 def EjecutarCaminoMasCortoEImprimirRespuesta(grafo, origen, destino):
     lista_camino, costo = camino_mas_corto(grafo, origen, destino)
@@ -30,8 +30,8 @@ def EjecutarListarComandoEImprimirRespuesta():
     cadena = "\n".join(COMANDOS[1:])
     print(cadena)
 
-def EjecutarLEctura2amEImprimirRespuesta(grafo, lista_paginas):
-    resultado = lectura_2_am(grafo, lista_paginas)
+def EjecutarLectura2amEImprimirRespuesta(grafo, lista_paginas):
+    resultado = lectura_2am_dfs(grafo, lista_paginas)
     if resultado is None:
         print("No existe forma de leer las paginas en orden")
         return

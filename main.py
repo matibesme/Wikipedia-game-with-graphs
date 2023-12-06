@@ -29,21 +29,19 @@ def main():
                 en=" ".join(entrada[1:])
                 v1,v2=en.split(",")
                 acciones.EjecutarCaminoMasCortoEImprimirRespuesta(grafo_wiki,v1,v2)
-            elif entrada==acciones.COMANDOS[3]:
-                if len(entrada)!=3:
-                    print("Faltan parametros")
-                    continue
-                acciones.EjecutarTodosEnRangoEImprimirRespuesta(grafo_wiki,entrada[1],int(entrada[2]))
+            elif entrada[0]==acciones.COMANDOS[3]:
+                en=" ".join(entrada[1:])
+                v1,v2=en.split(",")
+                acciones.EjecutarTodosEnRangoEImprimirRespuesta(grafo_wiki,v1,int(v2))
             elif entrada[0]==acciones.COMANDOS[4]:
                 if len(entrada) != 2:
                     print("Faltan parametros")
                     continue
                 acciones.EjecutarNavPorPrimerLinkEImprimirRespuesta(grafo_wiki,entrada[1])
             elif entrada[0] == acciones.COMANDOS[5]:
-                if len(entrada) < 2:
-                    print("Faltan parametros")
-                    continue
-                acciones.EjecutarLectura2amEImprimirRespuesta(grafo_wiki, entrada[1:])
+                en=" ".join(entrada[1:])
+                lista=en.split(",")
+                acciones.EjecutarLectura2amEImprimirRespuesta(grafo_wiki, lista)
             else:
                 print("No existe el comando")
             
@@ -51,3 +49,6 @@ def main():
 if __name__ == "__main__":
     main()
 
+def entradaConComa(entrada):
+    en=" ".join(entrada[1:])
+    return en.split(",")

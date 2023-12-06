@@ -16,11 +16,12 @@ def mayor_distancia_desde_v(grafo, origen):
     padres = {origen: None}
     distancias = {origen: 0}
     q = deque()
+    q.append(origen)
     while len(q) > 0:
         v = q.popleft()
         for w in grafo.adyacentes(v):
             if w not in visitados:
-                visitados{w]
+                visitados[w]=True
                 padres[w] = v
                 distancias[w] = distancias[v] + 1
                 q.append(w)
@@ -63,14 +64,15 @@ def reconstruir_camino(origen, destino, padres):
 
 #TODOS EN RANGO
 def rango(grafo, vertice, n):
-    visitados = set(vertice)
+    visitados = {vertice:True}
     distancias = {vertice: 0}
     q = deque()
+    q.append(vertice)
     while len(q) > 0:
         v = q.popleft()
         for w in grafo.adyacentes(v):
             if w not in visitados:
-                visitados.add(w)
+                visitados[w]=True
                 distancias[w] = distancias[v] + 1
                 q.append(w)
     contador = 0
@@ -90,27 +92,30 @@ def navegacion_primer_link(grafo, origen):
 def navegacion(grafo, origen, lista_navegacion, contador):
     if len(grafo.adyacentes(origen)) == 0:
         return
-    lista_navegacion.append(grafo.adyacentes(origen)[0])
+    primer_comp=next(iter(grafo.adyacentes(origen)))
+    lista_navegacion.append(primer_comp)
     contador += 1
     if contador == 20:
         return
-    navegacion(grafo, grafo.adyacentes(origen)[0], lista_navegacion, contador)
+    navegacion(grafo,  primer_comp, lista_navegacion, contador)
 
 
 
 def lectura_2_am(grafo,lista_paginas):
-    set_paginas=set()
-    visitados=set()
+    set_paginas={}
+    visitados={}
     lista=[]
     for v in lista_paginas:
-        set_paginas.add(v)
+        set_paginas[v]=True
     
     entradas = grados_entrada_paginas(grafo, lista_paginas, set_paginas)
     q=deque()
+    
     for vertice, valor in entradas.items():
         if valor == 0:
             q.append(vertice)
-            visitados.add(vertice)
+
+            visitados[vertice]=True
     while len(q) > 0:
         v=q.popleft()
         lista.append(v)
@@ -120,7 +125,7 @@ def lectura_2_am(grafo,lista_paginas):
                     return None
                 entradas[w]-=1
                 if entradas[w]==0:
-                    visitados.add(w)
+                    visitados[w]=True
                     q.append(w)
     return lista[::-1]
     
@@ -165,8 +170,25 @@ def clustering_individual(grafo, pagina):
 
 
 
+def lectura_2am_dfs(grafo, paginas):
+    visitados = {}
+    set_paginas = {}
+    for pagina in paginas:
+            set_paginas[pagina]=True
+    resultado = []
+    for v in paginas:
+        if v not in visitados:
+            _recorrido_dfs(grafo,v,visitados,set_paginas, resultado)
+    return resultado 
 
-
+def _recorrido_dfs(grafo,v,visitados,set_paginas,resultado):
+    visitados[v]=True
+    for w in grafo.adyacentes(v):
+        if w not in visitados:
+            _recorrido_dfs(grafo,w,visitados,set_paginas,resultado)
+    
+    if v in set_paginas:
+        resultado.append(v)
 
 
 
