@@ -1,5 +1,6 @@
 from grafo.grafo import *
 from collections import deque
+import math
 #DIAMETROy 
 def obtener_diametro(grafo):
     lista_diametro = []
@@ -144,11 +145,15 @@ def coeficiente_de_clustering(grafo, pagina=None):
     
     contador = 0
     total_vertices = len(grafo.obtener_vertices())
-    
+    print(total_vertices)
     for v in grafo.obtener_vertices():
-        contador += clustering_individual(grafo, v)
-    
+        cluster=clustering_individual(grafo, v)
+        redondeo = math.ceil(cluster * 10**3) / 10**3
+        contador += redondeo
+        
+    print(contador)
     clustering_promedio = (1 / total_vertices) * contador
+    print(clustering_promedio)
     return clustering_promedio
     
 def clustering_individual(grafo, vertice):

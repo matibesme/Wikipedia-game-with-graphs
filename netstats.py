@@ -24,29 +24,32 @@ def main():
 
             if entrada[0]==COMANDOS[0]:
                 EjecutarListarComandoEImprimirRespuesta()
+
             elif entrada[0]==COMANDOS[1]:
                 EjecutarDiametroEImprimirRespuesta(grafo_wiki)
+
             elif entrada[0]==COMANDOS[2]:
-                en=" ".join(entrada[1:])
-                v1,v2=en.split(",")
+                parametros=juntarParametros(entrada[1:])
+                v1,v2=parametros.split(",")
                 EjecutarCaminoMasCortoEImprimirRespuesta(grafo_wiki,v1,v2)
+
             elif entrada[0]==COMANDOS[3]:
-                en=" ".join(entrada[1:])
-                v1,v2=en.split(",")
+                parametros=juntarParametros(entrada[1:])
+                v1,v2=parametros.split(",")
                 EjecutarTodosEnRangoEImprimirRespuesta(grafo_wiki,v1,int(v2))
+
             elif entrada[0]==COMANDOS[4]:
-                if len(entrada) != 2:
-                    print("Faltan parametros")
-                    continue
-                EjecutarNavPorPrimerLinkEImprimirRespuesta(grafo_wiki,entrada[1])
+                EjecutarNavPorPrimerLinkEImprimirRespuesta(grafo_wiki,juntarParametros(entrada[1:]))
+
             elif entrada[0] == COMANDOS[5]:
-                en=" ".join(entrada[1:])
-                lista=en.split(",")
+                parametros=juntarParametros(entrada[1:])
+                lista=parametros.split(",")
                 EjecutarLectura2amEImprimirRespuesta(grafo_wiki, lista)
+                
             elif entrada[0] == COMANDOS[6]:
                 if len(entrada)!=1:
-                    en=" ".join(entrada[1:])
-                    EjecutarClusteringEImprimirRespuesta(grafo_wiki,en)
+                    parametros=juntarParametros(entrada[1:])
+                    EjecutarClusteringEImprimirRespuesta(grafo_wiki,parametros)
                 else:
                     EjecutarClusteringEImprimirRespuesta(grafo_wiki,None)
                 

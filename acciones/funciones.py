@@ -24,3 +24,8 @@ def leerArchivoTsvYCrearGrafo(nombre_archivo):
 
     return grafo
 
+
+
+def juntarParametros(lista):
+    parametros=" ".join(lista)
+    return parametros
