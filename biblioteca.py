@@ -176,19 +176,29 @@ def lectura_2am_dfs(grafo, paginas):
     for pagina in paginas:
             set_paginas[pagina]=True
     resultado = []
-    for v in paginas:
+   
+    for v in paginas[::-1]:
+        visitados_dfs = {"hay_ciclo": False}
         if v not in visitados:
-            _recorrido_dfs(grafo,v,visitados,set_paginas, resultado)
+           _recorrido_dfs(grafo,v,visitados,set_paginas, resultado, visitados_dfs)
+        if visitados_dfs["hay_ciclo"]:
+            return None
+
     return resultado 
 
-def _recorrido_dfs(grafo,v,visitados,set_paginas,resultado):
+def _recorrido_dfs(grafo,v,visitados,set_paginas,resultado, visitados_dfs):
+    visitados_dfs[v] = True
     visitados[v]=True
-    for w in grafo.adyacentes(v):
-        if w not in visitados:
-            _recorrido_dfs(grafo,w,visitados,set_paginas,resultado)
-    
+    ady=grafo.adyacentes(v)
+  
+    for w in ady:
+        if w in visitados_dfs:
+            visitados_dfs["hay_ciclo"] = True
+            return 
+        if w not in visitados and w in set_paginas:
+            _recorrido_dfs(grafo,w,visitados,set_paginas,resultado,visitados_dfs)
+       
     if v in set_paginas:
         resultado.append(v)
-
-
+  
 
