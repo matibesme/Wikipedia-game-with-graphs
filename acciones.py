@@ -1,6 +1,6 @@
 from biblioteca import *
 
-COMANDOS=["listar_operaciones","diametro","camino","rango","navegacion","lectura"]
+COMANDOS=["listar_operaciones","diametro","camino","rango","navegacion","lectura","clustering"]
 
 def EjecutarCaminoMasCortoEImprimirRespuesta(grafo, origen, destino):
     lista_camino, costo = camino_mas_corto(grafo, origen, destino)
@@ -37,3 +37,8 @@ def EjecutarLectura2amEImprimirRespuesta(grafo, lista_paginas):
         return
     resultado_str = ", ".join(resultado)
     print(resultado_str)
+
+
+def EjecutarClusteringEImprimirRespuesta(grafo, lista_paginas):
+    resultado = coeficiente_de_clustering(grafo, lista_paginas)
+    print(resultado)

@@ -42,6 +42,7 @@ def main():
                 en=" ".join(entrada[1:])
                 lista=en.split(",")
                 acciones.EjecutarLectura2amEImprimirRespuesta(grafo_wiki, lista)
+
             else:
                 print("No existe el comando")
             

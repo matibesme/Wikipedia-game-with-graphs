@@ -101,49 +101,43 @@ def navegacion(grafo, origen, lista_navegacion, contador):
 
 
 
-def lectura_2_am(grafo,lista_paginas):
-    set_paginas={}
-    visitados={}
-    lista=[]
-    for v in lista_paginas:
-        set_paginas[v]=True
-    
-    entradas = grados_entrada_paginas(grafo, lista_paginas, set_paginas)
-    q=deque()
-    
-    for vertice, valor in entradas.items():
-        if valor == 0:
-            q.append(vertice)
 
-            visitados[vertice]=True
-    while len(q) > 0:
-        v=q.popleft()
-        lista.append(v)
-        for w in grafo.adyacentes(v):
-            if w in set_paginas:
-                if w in visitados:
-                    return None
-                entradas[w]-=1
-                if entradas[w]==0:
-                    visitados[w]=True
-                    q.append(w)
-    return lista[::-1]
-    
-
-def grados_entrada_paginas(grafo, lista_paginas, set_paginas):
-    entradas = {}
-    for v in lista_paginas:
-        entradas[v] = 0
-    for v in lista_paginas:
-        for w in grafo.adyacentes(v):
-            if w in set_paginas:
-                entradas[w] += 1
-    return entradas
-
-    
-
-
+def lectura_2am_dfs(grafo, paginas):
+    visitados = {}
+    set_paginas = {}
+    for pagina in paginas:
+            set_paginas[pagina]=True
+    resultado = []
    
+    for v in paginas[::-1]:
+        visitados_dfs = {"hay_ciclo": False}
+        if v not in visitados:
+           _recorrido_dfs(grafo,v,visitados,set_paginas, resultado, visitados_dfs)
+           
+        if visitados_dfs["hay_ciclo"]:
+                return None
+
+    return resultado 
+
+def _recorrido_dfs(grafo,v,visitados,set_paginas,resultado, visitados_dfs):
+    visitados_dfs[v] = True
+    visitados[v]=True
+    ady=grafo.adyacentes(v)
+  
+  
+    for w in ady:
+        if w in visitados_dfs:
+            visitados_dfs["hay_ciclo"] = True
+            return 
+        if w not in visitados and w in set_paginas:
+            _recorrido_dfs(grafo,w,visitados,set_paginas,resultado,visitados_dfs)
+       
+    if v in set_paginas:
+        resultado.append(v)
+        del visitados_dfs[v]
+  
+
+
 def coeficiente_de_clustering(grafo,pagina):
     salida=len(grafo.adyacentes(pagina))
 
@@ -166,39 +160,3 @@ def clustering_individual(grafo, pagina):
             contador+=1
     return contador/(salida*(salida-1))
         
-
-
-
-
-def lectura_2am_dfs(grafo, paginas):
-    visitados = {}
-    set_paginas = {}
-    for pagina in paginas:
-            set_paginas[pagina]=True
-    resultado = []
-   
-    for v in paginas[::-1]:
-        visitados_dfs = {"hay_ciclo": False}
-        if v not in visitados:
-           _recorrido_dfs(grafo,v,visitados,set_paginas, resultado, visitados_dfs)
-        if visitados_dfs["hay_ciclo"]:
-            return None
-
-    return resultado 
-
-def _recorrido_dfs(grafo,v,visitados,set_paginas,resultado, visitados_dfs):
-    visitados_dfs[v] = True
-    visitados[v]=True
-    ady=grafo.adyacentes(v)
-  
-    for w in ady:
-        if w in visitados_dfs:
-            visitados_dfs["hay_ciclo"] = True
-            return 
-        if w not in visitados and w in set_paginas:
-            _recorrido_dfs(grafo,w,visitados,set_paginas,resultado,visitados_dfs)
-       
-    if v in set_paginas:
-        resultado.append(v)
-  
-
