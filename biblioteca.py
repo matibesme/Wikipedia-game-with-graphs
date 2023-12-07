@@ -138,25 +138,29 @@ def _recorrido_dfs(grafo,v,visitados,set_paginas,resultado, visitados_dfs):
   
 
 
-def coeficiente_de_clustering(grafo,pagina):
-    salida=len(grafo.adyacentes(pagina))
-
+def coeficiente_de_clustering(grafo, pagina=None):
     if pagina is not None:
-        return clustering_individual(grafo,pagina)
+        return clustering_individual(grafo, pagina)
+    
     contador = 0
+    total_vertices = len(grafo.obtener_vertices())
+    
     for v in grafo.obtener_vertices():
         contador += clustering_individual(grafo, v)
-    return (1/len(grafo.obtener_vertices())) * contador
     
+    clustering_promedio = (1 / total_vertices) * contador
+    return clustering_promedio
     
+def clustering_individual(grafo, vertice):
+    cant_ady = len(grafo.adyacentes(vertice))
 
-def clustering_individual(grafo, pagina):
-    salida=len(grafo.adyacentes(pagina))
-    if len(salida) < 2:
-        return 0
-    contador=salida
-    for v in grafo.adyacentes(pagina):
-        if grafo.estan_unidos(v,pagina):
-            contador+=1
-    return contador/(salida*(salida-1))
-        
+    if cant_ady < 2:
+        return 0.000
+
+    contador = 0
+    for v in grafo.adyacentes(vertice):
+        for w in grafo.adyacentes(vertice):
+            if v != w and grafo.estan_unidos(v, w) and v != vertice and w != vertice:
+                contador += 1
+    clustering_individual = contador / (cant_ady * (cant_ady - 1))
+    return clustering_individual

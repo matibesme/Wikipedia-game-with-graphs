@@ -39,6 +39,6 @@ def EjecutarLectura2amEImprimirRespuesta(grafo, lista_paginas):
     print(resultado_str)
 
 
-def EjecutarClusteringEImprimirRespuesta(grafo, lista_paginas):
-    resultado = coeficiente_de_clustering(grafo, lista_paginas)
+def EjecutarClusteringEImprimirRespuesta(grafo, pagina):
+    resultado = round(coeficiente_de_clustering(grafo, pagina), 3)
     print(resultado)

@@ -42,7 +42,13 @@ def main():
                 en=" ".join(entrada[1:])
                 lista=en.split(",")
                 acciones.EjecutarLectura2amEImprimirRespuesta(grafo_wiki, lista)
-
+            elif entrada[0] == acciones.COMANDOS[6]:
+                if len(entrada)!=1:
+                    en=" ".join(entrada[1:])
+                    acciones.EjecutarClusteringEImprimirRespuesta(grafo_wiki,en)
+                else:
+                    acciones.EjecutarClusteringEImprimirRespuesta(grafo_wiki,None)
+                
             else:
                 print("No existe el comando")
             
@@ -50,6 +56,4 @@ def main():
 if __name__ == "__main__":
     main()
 
-def entradaConComa(entrada):
-    en=" ".join(entrada[1:])
-    return en.split(",")
+
