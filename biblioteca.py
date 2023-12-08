@@ -1,7 +1,9 @@
 from grafo.grafo import *
 from collections import deque
-import math
-#DIAMETROy 
+
+
+
+#DIAMETRO 
 def obtener_diametro(grafo):
     lista_diametro = []
     distancia_diametro = 0
@@ -100,9 +102,7 @@ def navegacion(grafo, origen, lista_navegacion, contador):
         return
     navegacion(grafo,  primer_comp, lista_navegacion, contador)
 
-
-
-
+#LECTURA 2AM
 def lectura_2am_dfs(grafo, paginas):
     visitados = {}
     set_paginas = {}
@@ -136,36 +136,39 @@ def _recorrido_dfs(grafo,v,visitados,set_paginas,resultado, visitados_dfs):
     if v in set_paginas:
         resultado.append(v)
         del visitados_dfs[v]
-  
 
 
+#CLUSTERING
 def coeficiente_de_clustering(grafo, pagina=None):
     if pagina is not None:
         return clustering_individual(grafo, pagina)
     
     contador = 0
     total_vertices = len(grafo.obtener_vertices())
-    print(total_vertices)
-    for v in grafo.obtener_vertices():
-        cluster=clustering_individual(grafo, v)
-        redondeo = math.ceil(cluster * 10**3) / 10**3
-        contador += redondeo
-        
-    print(contador)
-    clustering_promedio = (1 / total_vertices) * contador
-    print(clustering_promedio)
-    return clustering_promedio
-    
-def clustering_individual(grafo, vertice):
-    cant_ady = len(grafo.adyacentes(vertice))
 
-    if cant_ady < 2:
-        return 0.000
+    for v in grafo.obtener_vertices():
+        contador += clustering_individual(grafo, v)
+      
+    clustering_promedio = (1/total_vertices) * contador
+    return clustering_promedio
+
+def clustering_individual(grafo, vertice):
+    grado_salida = grados_de_salida(grafo, vertice)
+    if grado_salida < 2:
+        return float(0.000)
 
     contador = 0
     for v in grafo.adyacentes(vertice):
         for w in grafo.adyacentes(vertice):
             if v != w and grafo.estan_unidos(v, w) and v != vertice and w != vertice:
                 contador += 1
-    clustering_individual = contador / (cant_ady * (cant_ady - 1))
+    clustering_individual = contador / (grado_salida*(grado_salida-1))
     return clustering_individual
+
+def grados_de_salida(grafo,v):
+    cont = 0
+    for w in grafo.adyacentes(v):
+        if w != v:
+            cont += 1
+    return cont
+

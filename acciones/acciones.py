@@ -40,5 +40,6 @@ def EjecutarLectura2amEImprimirRespuesta(grafo, lista_paginas):
 
 
 def EjecutarClusteringEImprimirRespuesta(grafo, pagina):
-    resultado = round(coeficiente_de_clustering(grafo, pagina), 3)
-    print(resultado)
+    resultado = float(coeficiente_de_clustering(grafo, pagina))
+    resultado_formateado = "{:.3f}".format(resultado)
+    print(resultado_formateado)
